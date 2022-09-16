@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: code-server
-        image: lscr.io/linuxserver/code-server:4.7.0
+        image: mrakaki/code-server:main
         volumeMounts:
         - name: cs-storage-point
           mountPath: "/config"
@@ -29,14 +29,12 @@ spec:
           name: cs-deploy-port
         resources:
           limits:
-            cpu: 2000m
-            memory: 1Gi
+            cpu: 4000m
+            memory: 2Gi
           requests:
             cpu: 1000m
             memory: 512Mi
         env: 
-        - name: PROXY_DOMAIN
-          value: code.vbalex.com
         - name: PUID
           value: '1000'
         - name: PGID
