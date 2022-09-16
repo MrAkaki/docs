@@ -22,7 +22,7 @@ If you want to set up a master server that only run server things (no workloads)
 ### Disable default ingress
 K3S come by default with trafik as ingress, if you want to install another you can disable traefik adding this flag
 `--no-deploy=traefik`
-For my user= case I prefer to use [nginx](https://docs.nginx.com/nginx-ingress-controller/).
+For my user= case I prefer to use [nginx](https://kubernetes.github.io/ingress-nginx/).
 
 ### Disable default internal load balancer
 If you plan to install an loadbalancer can disable the buildint adding this flag
