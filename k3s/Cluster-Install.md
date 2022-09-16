@@ -69,8 +69,3 @@ Total Number of nodes | Failed Node Tolerance
 ...|...
 
 This is why most of the people recomends a cluster of 3/5/7 nodes
-
-
-curl -sfL https://get.k3s.io | sh -s - agent \
---token=1tAlYeR3945adb89aSj \
---server https://172.22.89.20:6443
