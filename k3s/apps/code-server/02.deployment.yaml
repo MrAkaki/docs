@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cs-deployment
+  namespace: code-server
+  labels:
+    app: code-server
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: code-server
+  template:
+    metadata:
+      labels:
+        app: code-server
+    spec:
+      containers:
+      - name: code-server
+        image: lscr.io/linuxserver/code-server:4.7.0
+        volumeMounts:
+        - name: cs-storage-point
+          mountPath: "/config"
+        ports:
+        - containerPort: 8443
+          protocol: TCP
+          name: cs-deploy-port
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 1Gi
+          requests:
+            cpu: 1000m
+            memory: 512Mi
+        env: 
+        - name: PROXY_DOMAIN
+          value: code.vbalex.com
+        - name: PUID
+          value: '1000'
+        - name: PGID
+          value: '1000'
+        - name: SUDO_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: passwords
+              key: sudo_password
+              optional: false
+        - name: PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: passwords
+              key: password
+              optional: false
+        livenessProbe:
+          exec:
+            command:
+              - curl
+              - --fail
+              - 'http://localhost:8443'
+
+        readinessProbe:
+          exec:
+            command:
+              - curl
+              - --fail
+              - 'http://localhost:8443'
+        
+      volumes:
+      - name: cs-storage-point
+        persistentVolumeClaim:
+          claimName: cs-storage
