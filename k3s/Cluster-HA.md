@@ -1,4 +1,7 @@
 # High Availability Mode with an embedded etcd database
+
+This installations requires physical machines or virtual machines with OS installed and previously configured with internet access.
+*EVERY COMAND REQUIERES HIGH PRIVILEGES(sudo or root)*
 ## Install first Server
 ```bash
 curl -sfL https://get.k3s.io | sh -s - server \
