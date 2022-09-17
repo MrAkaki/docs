@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: vaultwarden
+  namespace: vaultwarden
+spec:
+  serviceName: "vaulwarden-headless"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vaultwarden
+  template:
+    metadata:
+      labels:
+        app: vaultwarden
+    spec:
+      containers:
+        - name: vaultwarden
+          image: vaultwarden/server:latest
+          volumeMounts:
+            - name: vw-data
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: vw-data
+        namespace: vaultwarden
+      spec:
+        storageClassName: nfs-client
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 4Gi
