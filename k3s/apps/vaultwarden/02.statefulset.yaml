@@ -20,6 +20,13 @@ spec:
           volumeMounts:
             - name: vw-data
               mountPath: /data
+          env:
+          - name: ADMIN_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: passwords
+                key: token
+                optional: false
   volumeClaimTemplates:
     - metadata:
         name: vw-data
